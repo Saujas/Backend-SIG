@@ -1,4 +1,4 @@
-<h1>Test Requests</h1>	
+	<h1>Test Requests</h1>	
 
 <form method="post" action="/test/"> {% csrf_token %}
 	<input type="text" name="data">
@@ -6,7 +6,7 @@
 	<button type="submit" name="get">GET</button>
 	<button type="submit" name="put">PUT</button>
 	<button type="submit" name="delete">DELETE</button>
-	<a href="/logout/">Logout {{ user.username }}</a>
+	<a href="/login/">Logout {{ user.username }}</a>
 </form>
 
 {% if yes %}

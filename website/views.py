@@ -1,11 +1,34 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout as django_logout
 from django.contrib import auth
+from django.contrib.auth.forms import UserCreationForm
 from .forms import LoginForm
 from .models import Client
+from django import forms
+from .forms import UserForm
+from django.contrib.auth.models import User
 
 
-def index(request):
+def signup(request):
+	if request.method == 'POST':
+		form = UserForm(request.POST)
+		print("Yes1")
+		if form.is_valid():
+			print("Yes")
+			username = form.cleaned_data['username']
+			raw_password = form.cleaned_data['password']
+			if not (User.objects.filter(username=username).exists()):
+				User.objects.create_user(username, None, raw_password)
+				#user = authenticate(username = username, password = raw_password)
+				#login(request, user)
+			return redirect('/login/')
+		else:
+			form = UserCreationForm()
+	return render(request, 'website/signup.html')
+
+
+
+def login(request):
 	data = True
 	if request.POST:
 		lform = LoginForm(request.POST)
@@ -22,10 +45,16 @@ def index(request):
 	return render(request, 'website/index.html')
 
 
+
 def test(request):
 	if request.user.is_authenticated:
 		if request.POST:
-			client = Client.objects.get(user=request.user)
+			if not Client.objects.filter(user=request.user).exists():
+				obj = Client(user=request.user)
+				obj.save()
+				client = obj
+			else:
+				client=Client.objects.get(user=request.user)
 			if 'post' in request.POST:
 				client.data = request.POST['data']
 				client.save()
