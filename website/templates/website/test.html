@@ -1,6 +1,43 @@
-	<h1>Test Requests</h1>	
+{% load staticfiles %}
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<link href="{% static 'website/index.css'	%}" type="text/css" rel="stylesheet"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!------ Include the above in your HEAD tag ---------->
 
-<form method="post" action="/test/"> {% csrf_token %}
+
+<div class="custom_body">
+    <div class="container">
+    	<div class="row">
+    	    <div class="login_box">
+    	        <section class="main-box">
+        	        <form action="/test/" method='post'> {% csrf_token %}
+        	        <div class="input-box">
+            	        <!-- <span class="input-group-addon i_icon"><i class="glyphicon glyphicon-user"></i></span> -->
+                        <input id="name" type="text" class="form-control input_layout" name="data">
+                    </div>
+                    <button type="submit" name="get">GET</button>
+                    <button type="submit" name="post">POST</button>
+					<button type="submit" name="put">PUT</button>
+					<button type="submit" name="delete">DELETE</button>
+                    </form>
+                    Your data:
+                    {% if yes %}
+						{{ client.data }}
+					{% endif %}
+					<br>
+					<br>
+					<br>
+					<a href="/login/"><font color="#0000ff">LOGOUT {{ user.username }}</font></a>
+                </section>
+    	    </div>
+
+    	</div>
+    </div>
+</div>
+
+<!-- <form method="post" action="/test/"> {% csrf_token %}
 	<input type="text" name="data">
 	<button type="submit" name="post">POST</button>
 	<button type="submit" name="get">GET</button>
@@ -11,4 +48,4 @@
 
 {% if yes %}
 	{{ client.data }}
-{% endif %}
+{% endif %} -->
